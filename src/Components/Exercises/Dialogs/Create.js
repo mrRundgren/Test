@@ -9,7 +9,6 @@ const styles = theme => ({
 })
 
 export default withStyles(styles) ( class extends Component {
-
   state = {
     open: false,
     exercise: {
@@ -27,7 +26,7 @@ export default withStyles(styles) ( class extends Component {
 
   handleChange = name => ({target: {value}}) => {
     this.setState({ 
-      exersise: {
+      exercise: {
         ...this.state.exercise,
         [name]: value 
       }
@@ -104,9 +103,7 @@ export default withStyles(styles) ( class extends Component {
             color="primary" 
             variant="contained"
             onClick={this.handleSubmit}
-          >
-            Create
-          </Button>
+          >Create</Button>
         </DialogActions>
       </Dialog>
     </Fragment>

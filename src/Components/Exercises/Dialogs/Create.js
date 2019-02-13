@@ -25,14 +25,14 @@ export default withStyles(styles) ( class extends Component {
     })
   }
 
-  handleChange = name => ({target: { value}}) => {
+  handleChange = name => ({target: {value}}) => {
     this.setState({ 
       exersise: {
         ...this.state.exercise,
         [name]: value 
       }
-    });
-  };
+    })
+  }
 
   handleSubmit = () => {
     // TODO: validate
@@ -102,7 +102,7 @@ export default withStyles(styles) ( class extends Component {
         <DialogActions>
           <Button 
             color="primary" 
-            variant="raised"
+            variant="contained"
             onClick={this.handleSubmit}
           >
             Create

@@ -13,7 +13,7 @@ const styles = {
 		padding: 20,
 		marginTop: 16,
 		marginBottom: 16,
-		height: 500,
+		height: 300,
 		overflowY: 'auto'
 	}
 };

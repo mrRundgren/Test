@@ -5,8 +5,14 @@ import {
 	Typography,
 	List,
 	ListItem,
-	ListItemText
+	ListItemText,
+  ListItemSecondaryAction,
+  IconButton
 } from '@material-ui/core';
+import {
+  Delete, Edit
+} from '@material-ui/icons'
+import Form from './Form'
 
 const styles = {
 	Paper: {
@@ -19,14 +25,20 @@ const styles = {
 };
 
 export default ({ 
+  muscles,
   exercises, 
   category, 
+  editMode,
   onSelect, 
+  exercise,
   exercise: {
     id, 
     title = 'Welcome!', 
     description = 'Please select an exercise from the list on the left.'
-  } 
+  },
+  onDelete,
+  onSelectEdit,
+  onEdit
 }) => 
 	<Grid container spacing={16}>
 		<Grid item sm>
@@ -36,7 +48,7 @@ export default ({
             ? <Fragment key={group}>
                 <Typography
                   variant="headline"
-                  style={{ textTransform: 'capitalize' }}>
+                  style={{ textTransform: 'capitalize' }} noWrap>
                   {group}
                 </Typography>
                 <List component="ul">
@@ -49,6 +61,18 @@ export default ({
                       <ListItemText 
                       primary={title} 
                     />
+                    <ListItemSecondaryAction>
+                      <IconButton 
+                      onClick={() => onSelectEdit(id)}
+                    >
+                        <Edit/>
+                      </IconButton>
+                      <IconButton
+                        onClick={() => onDelete(id)}
+                      >
+                        <Delete />
+                      </IconButton>
+                    </ListItemSecondaryAction>
                     </ListItem>
                   ))}
                 </List>
@@ -59,8 +83,17 @@ export default ({
 		</Grid>
 		<Grid item sm>
 			<Paper style={styles.Paper}>
-				<Typography variant="display1">{title}</Typography>
-				<Typography variant="subheading">{description}</Typography>
+        {editMode
+          ? <Form 
+              muscles={muscles}
+              onSubmit={onEdit}
+              exercise={exercise}
+            />
+          : <Fragment>
+            <Typography variant="display1">{title}</Typography>
+            <Typography variant="subheading">{description}</Typography> 
+          </Fragment>
+        }
 			</Paper>
 		</Grid>
 	</Grid>

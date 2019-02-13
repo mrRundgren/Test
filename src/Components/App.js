@@ -1,57 +1,69 @@
 import React, { Component, Fragment } from 'react';
 import { Header, Footer } from './Layouts';
-import Excersises from './Excersises';
-import { muscles, excersises } from '../store';
+import Exercises from './Exercises';
+import { muscles, exercises } from '../store';
 
 export default class extends Component {
-	state = {
-		excersises,
-    excersise: {}
-	};
+  state = {
+    exercises,
+    exercise: {}
+  };
 
-	getExcersisesByMuscle() {
-		return Object.entries(
-			this.state.excersises.reduce((excersises, excersise) => {
-				const { muscles } = excersise;
-				excersises[muscles] = excersises[muscles]
-					? [...excersises[muscles], excersise]
-					: [excersise];
+  getExercisesByMuscle() {
+    return Object.entries(
+      this.state.exercises.reduce((exercises, exercise) => {
+        const { muscles } = exercise;
+        exercises[muscles] = exercises[muscles]
+          ? [...exercises[muscles], exercise]
+          : [exercise];
 
-				return excersises;
-			}, {})
-		);
-	}
+        return exercises;
+      }, {})
+    );
+  };
 
-	handleCategorySelected = category => {
-		this.setState({
+  handleCategorySelect = category => {
+    this.setState({
       category
     });
-	};
+  };
 
-  handleExcersiseSelected = id => {
-    this.setState(({excersises}) => ({
-      excersise: excersises.find(ex => ex.id === id)
+  handleExerciseCreate = exersice => {
+    this.setState(({exercises}) => ({
+      exercises: [
+        ...exercises,
+        exersice
+      ]
+    }))
+  };
+
+  handleExerciseSelect = id => {
+    this.setState(({ exercises }) => ({
+      exercise: exercises.find(ex => ex.id === id)
     }));
   };
 
-	render() {
-		const excersises = this.getExcersisesByMuscle(),
-      { category, excersise } = this.state;
-		return (
-			<Fragment>
-				<Header />
-        <Excersises 
-          excersise={excersise}
-          category={category} 
-          excersises={excersises} 
-          onSelect={this.handleExcersiseSelected}
+  render() {
+    const exercises = this.getExercisesByMuscle(),
+      { category, exercise } = this.state;
+    return (
+      <Fragment>
+        <Header 
+          muscles={muscles} 
+          onExerciseCreate={this.handleExerciseCreate} 
         />
-				<Footer
-					category={category}
-					onSelect={this.handleCategorySelected}
-					muscles={muscles}
-				/>
-			</Fragment>
-		);
-	}
+        <Exercises
+          exercise={exercise}
+          category={category}
+          exercises={exercises}
+          onSelect={this.handleExerciseSelect}
+        />
+        <Footer
+          category={category}
+          onSelect={this.handleCategorySelect}
+          muscles={muscles}
+        />
+      </Fragment>
+    );
+  }
 }

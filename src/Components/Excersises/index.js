@@ -1,7 +1,12 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
-import LeftPane from "./LeftPane";
-import RightPane from "./RightPane";
+import React, { Fragment } from "react";
+import {
+  Grid,
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  ListItemText
+} from "@material-ui/core";
 
 const styles = {
   Paper: {
@@ -11,13 +16,36 @@ const styles = {
   }
 };
 
-export default props => (
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
+
+export default ({ excersises }) => (
   <Grid container spacing={16}>
     <Grid item sm>
-      <LeftPane styles={styles} />
+      <Paper style={styles.Paper}>
+        {excersises.map(([group, excersises]) => (
+          <Fragment>
+            <Typography
+              variant="headline"
+              style={{ textTransform: "capitalize" }}
+            >
+              {group}
+            </Typography>
+            <List component="nav">
+              <ListItem button>
+                <ListItemText primary="Trash" />
+              </ListItem>
+              <ListItem button a href="#simple-list">
+                <ListItemText primary="Spam" />
+              </ListItem>
+            </List>
+          </Fragment>
+        ))}
+      </Paper>
     </Grid>
     <Grid item sm>
-      <RightPane styles={styles} />
+      <Paper style={styles.Paper}>Right Pane</Paper>
     </Grid>
   </Grid>
 );
